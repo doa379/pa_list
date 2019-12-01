@@ -32,7 +32,7 @@ void *list_next(list_t *list, void *data)
   if (data == list_tail(list))
     return NULL;
 
-  return (char *) data + sizeof *list + list->el_size;
+  return (char *) data + list->el_size;
 }
 
 void *list_prev(list_t *list, void *data)
@@ -40,7 +40,7 @@ void *list_prev(list_t *list, void *data)
   if (data == list_head(list))
     return NULL;
 
-  return (char *) data - sizeof *list - list->el_size;
+  return (char *) data - list->el_size;
 }
 
 void *list_head(list_t *list)
@@ -53,7 +53,7 @@ void *list_head(list_t *list)
 
 void *list_itr_head(list_t *list, size_t n)
 {
-  if (list == NULL || !list->count)
+  if (!list->count)
     return NULL;
 
   else if (n > list->count - 1)
@@ -64,7 +64,7 @@ void *list_itr_head(list_t *list, size_t n)
 
 void *list_tail(list_t *list)
 {
-  if (list == NULL || !list->count)
+  if (!list->count)
     return NULL;
 
   return (char *) list + sizeof *list + (list->count - 1) * list->el_size;
