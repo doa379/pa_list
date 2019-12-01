@@ -29,20 +29,18 @@ void list_clear(list_t *list)
 
 void *list_next(list_t *list, void *data)
 {
-  for (size_t i = list->count; i > 0; i--)
-    if ((char *) list + sizeof *list + (i - 1) * list->el_size == data)
-      return (char *) list + sizeof *list + i * list->el_size;
+  if (data == list_tail(list))
+    return NULL;
 
-  return NULL;
+  return (char *) data + sizeof *list + list->el_size;
 }
 
 void *list_prev(list_t *list, void *data)
 {
-  for (size_t i = list->count; i > 0; i--)
-    if ((char *) list + sizeof *list + (i - 1) * list->el_size == data)
-      return (char *) list + sizeof *list + (i - 2) * list->el_size;
+  if (data == list_head(list))
+    return NULL;
 
-  return NULL;
+  return (char *) data - sizeof *list - list->el_size;
 }
 
 void *list_head(list_t *list)
