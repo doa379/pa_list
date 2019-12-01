@@ -2,7 +2,7 @@ LIBS_PATH = /lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/
 INCS =
 LIBS = -l pthread
 
-SRC_QUEUE = pa_list.c
+SRC_QUEUE = pa_list.c pa_tpool.c
 OBJ_QUEUE = ${SRC_QUEUE:.c=.o}
 
 CC = gcc
@@ -22,5 +22,5 @@ libpa_queue.so: ${OBJ_QUEUE}
 clean:
 		@echo cleaning
 		@rm -f ${OBJ_QUEUE}
-		@rm -f test_list
-		@rm -f test_tpool
+		@rm -f test_pa_list
+		@rm -f test_pa_tpool
