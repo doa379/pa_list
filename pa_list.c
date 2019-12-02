@@ -99,10 +99,15 @@ void list_add(list_t *list, void *data)
 
 void list_remove(list_t *list, void *data)
 {
-  for (size_t i = list->count; i > 0; i--)
-    if ((char *) list + sizeof *list + (i - 1) * list->el_size == data)
-      for (size_t j = i; j < list->count; j++)
-	memcpy((char*) list + sizeof *list + (j - 1) * list->el_size, (char *) list->data + j * list->el_size, list->el_size);
+  size_t i = 0;
+  
+  for (char *n = list_tail(list); n; n = list_prev(list, n), i++)
+    {
+      if (n == data)
+	memcpy(n, list_next(list, n), i * list->el_size);
+
+      break;
+    }
 
   list->count--;
 }

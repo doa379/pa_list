@@ -15,13 +15,11 @@ int main()
     {
       int v = rand() % 100;
       list_add(list, &v);
-      printf("%d\n", v);
-      printf("List Head %d List tail %d\n", *(int *) list_head(list), *(int *) list_tail(list));
+      printf("%d: List Head %d List tail %d\n", v, *(int *) list_head(list), *(int *) list_tail(list));
     }
 
   printf("Count %d head %d tail %d\n", list_count(list), *(int *) list_head(list), *(int *) list_tail(list));
-
-  printf("Iterate\n");
+  printf("Iterate from tail\n");
   for (int *n = list_tail(list); n; n = list_prev(list, n))
     printf("%d ", *(int *) n);
 
@@ -38,11 +36,13 @@ int main()
 
   printf("\nRemove from head\n");
   for (int *n = list_head(list), i = 0; n && i < 2; n = list_next(list, n), i++)
-    list_remove(list, n);
+    //if (i == 1)
+      list_remove(list, n);
   
   for (int i = 0; i < list->count; i++)
     printf("%d ", *(int *) list_itr_head(list, i));
- 
+
+  printf("\n");
   list_del(list);
   return 0;
 }
