@@ -1,19 +1,16 @@
 #include <string.h>
 #include "pa_list.h"
 
-#define LIST_INIT_SIZE 4096
-#define LIST_INC_SIZE 256
-
-list_t *list_new(size_t el_size)
+list_t *list_new(size_t el_size, size_t alloc_size)
 {
-  list_t *list = malloc(sizeof *list + LIST_INIT_SIZE * el_size);
+  list_t *list = malloc(sizeof *list + alloc_size * el_size);
  
   if (list == NULL)
     return NULL;
   
   list->count = 0;
   list->el_size = el_size;
-  list->alloc_size = LIST_INIT_SIZE;
+  list->alloc_size = alloc_size;
   return list;
 }
 
@@ -87,10 +84,10 @@ void list_add(list_t *list, void *data)
 {
   if (list->count > list->alloc_size - 1)
     {      
-      if ((list = realloc(list, sizeof *list + (list->alloc_size + LIST_INC_SIZE) * list->el_size)) == NULL)
+      if ((list = realloc(list, sizeof *list + (list->alloc_size + list->alloc_size / 2) * list->el_size)) == NULL)
 	return;
 
-      list->alloc_size += LIST_INC_SIZE;
+      list->alloc_size += list->alloc_size / 2;
     }
 
   memcpy((char *) list + sizeof *list + (list->count * list->el_size), data, list->el_size);
@@ -102,12 +99,11 @@ void list_remove(list_t *list, void *data)
   size_t i = 0;
   
   for (char *n = list_tail(list); n; n = list_prev(list, n), i++)
-    {
-      if (n == data)
-	memcpy(n, list_next(list, n), i * list->el_size);
-
-      break;
-    }
+    if (n == data)
+      {
+	memcpy((char *) n, (char *) list_next(list, n), i * list->el_size);
+	break;
+      }
 
   list->count--;
 }

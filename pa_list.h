@@ -9,7 +9,7 @@ typedef struct
   void *data;
 } list_t;
 
-list_t *list_new(size_t);
+list_t *list_new(size_t, size_t);
 void list_del(list_t *);
 void list_clear(list_t *);
 void *list_next(list_t *, void *);

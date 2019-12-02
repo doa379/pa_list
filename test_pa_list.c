@@ -8,7 +8,7 @@
 
 int main()
 {
-  list_t *list = list_new(sizeof(int));
+  list_t *list = list_new(sizeof(int), 10);
   srand(time(NULL));
   
   for (unsigned i = 0; i < 10; i++)
