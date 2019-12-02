@@ -14,6 +14,18 @@ pa_list_t *pa_list_new(size_t alloc_size, size_t el_size)
   return list;
 }
 
+pa_list_t *pa_list_replicate(pa_list_t *list)
+{
+  pa_list_t *replicate = pa_list_new(list->alloc_size, list->el_size);
+
+  if (replicate == NULL)
+    return NULL;
+
+  replicate->count = list->count;
+  memcpy(replicate->data, list->data, list->alloc_size * list->el_size);
+  return replicate;
+}
+
 void pa_list_del(pa_list_t *list)
 {
   free(list);

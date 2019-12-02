@@ -11,6 +11,7 @@ typedef struct
 } pa_list_t;
 
 pa_list_t *pa_list_new(size_t, size_t);
+pa_list_t *pa_list_replicate(pa_list_t *);
 void pa_list_del(pa_list_t *);
 void pa_list_clear(pa_list_t *);
 void *pa_list_next(pa_list_t *, void *);
