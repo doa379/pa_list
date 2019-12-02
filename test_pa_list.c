@@ -8,41 +8,41 @@
 
 int main()
 {
-  list_t *list = list_new(sizeof(int), 10);
+  pa_list_t *list = pa_list_new(10, sizeof(int));
   srand(time(NULL));
   
   for (unsigned i = 0; i < 10; i++)
     {
       int v = rand() % 100;
-      list_add(list, &v);
-      printf("%d: List Head %d List tail %d\n", v, *(int *) list_head(list), *(int *) list_tail(list));
+      pa_list_add(list, &v);
+      printf("%d: List Head %d List tail %d\n", v, *(int *) pa_list_head(list), *(int *) pa_list_tail(list));
     }
 
-  printf("Count %d head %d tail %d\n", list_count(list), *(int *) list_head(list), *(int *) list_tail(list));
+  printf("Count %d head %d tail %d\n", pa_list_count(list), *(int *) pa_list_head(list), *(int *) pa_list_tail(list));
   printf("Iterate from tail\n");
-  for (int *n = list_tail(list); n; n = list_prev(list, n))
+  for (int *n = pa_list_tail(list); n; n = pa_list_prev(list, n))
     printf("%d ", *(int *) n);
 
   printf("\nIterate from head\n");
   for (int i = 0; i < list->count; i++)
-    printf("%d ", *(int *) list_itr_head(list, i));
+    printf("%d ", *(int *) pa_list_itr_head(list, i));
 
   printf("\nRemove from tail\n");
-  for (int *n = list_tail(list), i = 0; n && i < 3; n = list_prev(list, n), i++)
-    list_remove(list, n);
+  for (int *n = pa_list_tail(list), i = 0; n && i < 3; n = pa_list_prev(list, n), i++)
+    pa_list_remove(list, n);
   
   for (int i = 0; i < list->count; i++)
-    printf("%d ", *(int *) list_itr_head(list, i));
+    printf("%d ", *(int *) pa_list_itr_head(list, i));
 
   printf("\nRemove from head\n");
-  for (int *n = list_head(list), i = 0; n && i < 2; n = list_next(list, n), i++)
+  for (int *n = pa_list_head(list), i = 0; n && i < 2; n = pa_list_next(list, n), i++)
     //if (i == 1)
-      list_remove(list, n);
+      pa_list_remove(list, n);
   
   for (int i = 0; i < list->count; i++)
-    printf("%d ", *(int *) list_itr_head(list, i));
+    printf("%d ", *(int *) pa_list_itr_head(list, i));
 
   printf("\n");
-  list_del(list);
+  pa_list_del(list);
   return 0;
 }
