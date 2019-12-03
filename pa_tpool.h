@@ -9,7 +9,7 @@ typedef struct
   void (*func)(void *, void *);
   void *arg;
   size_t arg_size;
-} job_t;
+} pa_job_t;
 
 typedef struct
 {

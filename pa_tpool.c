@@ -3,7 +3,7 @@
 
 static void job_del(void *node, void *context)
 {
-  job_t *job = (job_t *) node;
+  pa_job_t *job = (pa_job_t *) node;
 
   if (job->arg_size)
     free(job->arg);
@@ -27,7 +27,7 @@ static void queue_pop(pa_tpool_t *pa_tpool)
 
 void pa_tpool_queue(pa_tpool_t *pa_tpool, void (*func)(void *, void *), void *arg, size_t size)
 {
-  job_t job = {
+  pa_job_t job = {
     .func = func,
     .arg = arg,
     .arg_size = size
@@ -62,7 +62,7 @@ static void *worker_th(void *userp)
 	  return NULL;
 	}
       
-      job_t *job = pa_list_head(pa_tpool->list_jobs_q);
+      pa_job_t *job = pa_list_head(pa_tpool->list_jobs_q);
       pthread_mutex_unlock(&pa_tpool->mutex);
       void (*func)(void *, void *) = job->func;
       func(pa_tpool->context, job->arg);
@@ -91,7 +91,7 @@ pa_tpool_t *pa_tpool_new(size_t alloc_size, void *context)
 {
   pa_tpool_t *pa_tpool = malloc(sizeof *pa_tpool);
   pa_tpool->quit = 0;
-  pa_tpool->list_jobs_q = pa_list_new(alloc_size, sizeof(job_t));
+  pa_tpool->list_jobs_q = pa_list_new(alloc_size, sizeof(pa_job_t));
   pa_tpool->context = context;
   pthread_mutex_init(&pa_tpool->mutex, NULL);
   pthread_cond_init(&pa_tpool->cond_var, NULL);
