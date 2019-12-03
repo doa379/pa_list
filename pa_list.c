@@ -127,8 +127,8 @@ void pa_list_remove_tail(pa_list_t *list)
     list->count--;
 }
 
-void pa_list_for_each(pa_list_t *list, void (*callback)(char *, void *), void *context)
+void pa_list_for_each(pa_list_t *list, void (*callback)(void *, void *), void *context)
 {
-  for (char *n = pa_list_head(list); n; n = pa_list_next(list, n))
+  for (void *n = pa_list_head(list); n; n = pa_list_next(list, n))
     callback(n, context);
 }

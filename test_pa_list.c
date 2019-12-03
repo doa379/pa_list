@@ -6,6 +6,11 @@
 #include <time.h>
 #include "pa_list.h"
 
+void print(void *n, void *context)
+{
+  printf("%d(%p) ", *(int *) n, *(int *) n);
+}
+
 int main()
 {
   pa_list_t *list = pa_list_new(10, sizeof(int));
@@ -44,5 +49,18 @@ int main()
 
   printf("\n");
   pa_list_del(list);
+  int V[] = { 4, 7, 8, 9 };
+  pa_list_t *list_p = pa_list_new(5, sizeof(int *));
+
+  for (unsigned i = 0; i < 4; i++)
+    {
+      int *p = &V[i];
+      printf("%p ", *p);
+      pa_list_add(list_p, p);
+    }
+
+  pa_list_for_each(list_p, print, NULL);
+  printf("\n");
+  pa_list_del(list_p);
   return 0;
 }

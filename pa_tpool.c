@@ -1,7 +1,7 @@
 #include <string.h>
 #include "pa_tpool.h"
 
-static void job_del(char *node, void *context)
+static void job_del(void *node, void *context)
 {
   job_t *job = (job_t *) node;
 

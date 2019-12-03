@@ -24,6 +24,6 @@ size_t pa_list_count(pa_list_t *);
 bool pa_list_add(pa_list_t *, void *);
 void pa_list_remove(pa_list_t *, void *);
 void pa_list_remove_tail(pa_list_t *);
-void pa_list_for_each(pa_list_t *, void (*)(char *, void *), void *);
+void pa_list_for_each(pa_list_t *, void (*)(void *, void *), void *);
 
 #endif
