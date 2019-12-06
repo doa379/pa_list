@@ -8,22 +8,29 @@
 
 void print(void *n, void *context)
 {
-  printf("%d(%p) ", *(int *) n, *(int *) n);
+  printf("%d(%p) ", **(int **) n, (int **) n);
 }
 
 int main()
 {
-  pa_list_t *list = pa_list_new(10, sizeof(int));
+  pa_list_t *list = pa_list_new(5, sizeof(int));
   srand(time(NULL));
   
-  for (unsigned i = 0; i < 10; i++)
+  for (unsigned i = 0; i < 7; i++)
     {
       int v = rand() % 100;
-      pa_list_add(list, &v);
-      printf("%d: List Head %d List tail %d\n", v, *(int *) pa_list_head(list), *(int *) pa_list_tail(list));
+      
+      if (!pa_list_add(list, &v))
+	{
+	  printf("Realloc failed\n");
+	  pa_list_del(list);
+	  exit(0);
+	}
+
+      printf("%d: List count %d List Head %d List tail %d\n", v, pa_list_count(list), *(int *) pa_list_head(list), *(int *) pa_list_tail(list));
     }
 
-  printf("Count %d head %d tail %d\n", pa_list_count(list), *(int *) pa_list_head(list), *(int *) pa_list_tail(list));
+  printf("\nAccess\n======\n");  
   printf("Iterate from tail\n");
   for (int *n = pa_list_tail(list); n; n = pa_list_prev(list, n))
     printf("%d ", *(int *) n);
@@ -49,6 +56,8 @@ int main()
 
   printf("\n");
   pa_list_del(list);
+
+  printf("\nStoring Pointer\n===============\n");
   int V[] = { 4, 7, 8, 9 };
   pa_list_t *list_p = pa_list_new(5, sizeof(int *));
 
@@ -56,10 +65,15 @@ int main()
     {
       int *p = &V[i];
       printf("%p ", *p);
-      pa_list_add(list_p, p);
+      pa_list_add(list_p, &p);
     }
 
   pa_list_for_each(list_p, print, NULL);
+  printf("\n");
+
+  for (int **i = pa_list_head(list_p); i; i = pa_list_next(list_p, i))
+    printf("%d ", **(int **) i);
+  
   printf("\n");
   pa_list_del(list_p);
   return 0;

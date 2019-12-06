@@ -6,7 +6,7 @@
 
 typedef struct
 {
-  size_t count, el_size, alloc_size;
+  size_t count, el_size, alloc_count;
   void *data;
 } pa_list_t;
 

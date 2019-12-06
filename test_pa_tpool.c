@@ -10,9 +10,9 @@
 void func_cb(void *context, void *data)
 {
   int *v = (int *) data;
-  printf("%d\n", *v);
-  sleep(5);
-  printf("Job exit\n");
+  printf("Job %d\n", *v);
+  sleep(1);
+  printf("Job(s) complete, exit\n");
 }
 
 int main()
