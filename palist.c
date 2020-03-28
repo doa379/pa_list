@@ -3,15 +3,14 @@
 
 #define ALLOC_INC_COUNT 128
 
-list_t *list_new(size_t alloc_count, size_t el_size)
+list_t *list_new(size_t el_size)
 {
   list_t *list = malloc(sizeof *list);
-  list->data = calloc(alloc_count, el_size);
 
   if (list == NULL)
     return NULL;
 
-  else if (list->data == NULL)
+  if ((list->data = calloc(ALLOC_INC_COUNT, el_size)) == NULL)
   {
     free(list);
     return NULL;
@@ -19,18 +18,25 @@ list_t *list_new(size_t alloc_count, size_t el_size)
 
   list->count = 0;
   list->el_size = el_size * sizeof(char);
-  list->alloc_count = alloc_count;
+  list->alloc_count = ALLOC_INC_COUNT;
   return list;
 }
 
 list_t *list_dup(list_t *list)
 {
-  list_t *dup = list_new(list->alloc_count, list->el_size);
+  list_t *dup = list_new(list->el_size);
 
   if (dup == NULL)
     return NULL;
 
   dup->count = list->count;
+  
+  if ((dup->data = malloc(list->count * list->el_size)) == NULL)
+  {
+    free(dup);
+    return NULL;
+  }
+
   memcpy(dup->data, list->data, list->count * list->el_size);
   return dup;
 }

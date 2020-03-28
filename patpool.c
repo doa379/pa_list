@@ -90,11 +90,11 @@ void tpool_del(tpool_t *tpool)
   tpool = NULL;
 }
 
-tpool_t *tpool_new(size_t alloc_size)
+tpool_t *tpool_new(void)
 {
   tpool_t *tpool = malloc(sizeof *tpool);
   tpool->quit = 0;
-  tpool->jobs_q = list_new(alloc_size, sizeof(job_t));
+  tpool->jobs_q = list_new(sizeof(job_t));
   pthread_mutex_init(&tpool->mutex, NULL);
   pthread_cond_init(&tpool->cond_var, NULL);
   pthread_create(&tpool->pth, NULL, worker_th, (void *) tpool);

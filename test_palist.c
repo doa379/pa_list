@@ -1,6 +1,6 @@
 /*
    $ cc test_palist.c -L $PWD -l paqueue -Wl,-rpath,$PWD -o test_palist && ./test_palist 
-   */
+*/
 
 #include <stdio.h>
 #include <time.h>
@@ -13,7 +13,7 @@ void print(void *n, void *context)
 
 int main()
 {
-  list_t *list = list_new(0, sizeof(int));
+  list_t *list = list_new(sizeof(int));
   srand(time(NULL));
 
   for (unsigned i = 0; i < 20; i++)
@@ -59,7 +59,7 @@ int main()
 
   printf("\nStoring Pointer\n===============\n");
   int V[] = { 4, 7, 8, 9 };
-  list_t *list_p = list_new(5, sizeof(int *));
+  list_t *list_p = list_new(sizeof(int *));
 
   for (unsigned i = 0; i < 4; i++)
   {

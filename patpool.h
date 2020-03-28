@@ -20,7 +20,7 @@ typedef struct
   bool quit;
 } tpool_t;
 
-tpool_t *tpool_new(size_t);
+tpool_t *tpool_new(void);
 void tpool_del(tpool_t *);
 void tpool_clear(tpool_t *);
 size_t tpool_count(tpool_t *);

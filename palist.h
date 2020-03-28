@@ -10,7 +10,7 @@ typedef struct
   void *data;
 } list_t;
 
-list_t *list_new(size_t, size_t);
+list_t *list_new(size_t);
 list_t *list_dup(list_t *);
 void list_del(list_t *);
 void list_clear(list_t *);
