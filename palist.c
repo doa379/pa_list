@@ -161,3 +161,9 @@ void list_for_each(list_t *list, void (*callback)(void *, void *), void *context
   for (void *n = list_head(list); n; n = list_next(list, n))
     callback(n, context);
 }
+
+void list_reverse(list_t *result, list_t *list)
+{
+  for (void *n = list_tail(list); n; n = list_prev(list, n))
+    list_add(result, n);
+}

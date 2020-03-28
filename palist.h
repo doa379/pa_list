@@ -25,5 +25,6 @@ bool list_add(list_t *, void *);
 void list_remove(list_t *, void *);
 void list_remove_tail(list_t *);
 void list_for_each(list_t *, void (*)(void *, void *), void *);
+void list_reverse(list_t *, list_t *);
 
 #endif
