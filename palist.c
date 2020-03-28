@@ -33,7 +33,7 @@ list_t *list_dup(list_t *list)
   
   if ((dup->data = malloc(list->count * list->el_size)) == NULL)
   {
-    free(dup);
+    list_del(dup);
     return NULL;
   }
 
@@ -43,7 +43,9 @@ list_t *list_dup(list_t *list)
 
 void list_del(list_t *list)
 {
-  free(list->data);
+  if (list->data)
+    free(list->data);
+
   free(list);
 }
 
