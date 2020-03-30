@@ -48,7 +48,6 @@ int main()
 
   printf("\nRemove from head\n");
   for (int *n = list_head(list), i = 0; n && i < 2; n = list_next(list, n), i++)
-    //if (i == 1)
     list_remove(list, n);
 
   for (int i = 0; i < list->count; i++)
