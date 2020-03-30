@@ -121,23 +121,20 @@ void *list_prev(list_t *list, void *data)
   return (char *) data - list->el_size;
 }
 
-void *list_itr_head(list_t *list, size_t n)
+void *list_at(list_t *list, ssize_t n)
 {
-  if (!list->count)
+  if (!list->count
+      || n > list->count - 1
+      || n < -list->count + 1)
     return NULL;
 
-  else if (n > list->count - 1)
-    return NULL;
-
-  return (char *) list_head(list) + (n * list->el_size);
-}
-
-void *list_itr_tail(list_t *list, size_t n)
-{
-  if (n > list->count - 1)
-    return NULL;
-
-  return (char *) list_tail(list) - n * list->el_size;
+  else if (n > 0)
+    return (char *) list_head(list) + n * list->el_size;
+  
+  else if (n < 0)
+    return (char *) list_tail(list) + (n + 1) * list->el_size;
+    
+  return (char *) list_head(list);
 }
 
 void list_remove_tail(list_t *list)

@@ -37,14 +37,14 @@ int main()
 
   printf("\nIterate from head\n");
   for (int i = 0; i < list->count; i++)
-    printf("%d ", *(int *) list_itr_head(list, i));
+    printf("%d ", *(int *) list_at(list, i));
 
   printf("\nRemove from tail\n");
   for (int *n = list_tail(list), i = 0; n && i < 3; n = list_prev(list, n), i++)
     list_remove(list, n);
 
   for (int i = 0; i < list->count; i++)
-    printf("%d ", *(int *) list_itr_head(list, i));
+    printf("%d ", *(int *) list_at(list, i));
 
   printf("\nRemove from head\n");
   for (int *n = list_head(list), i = 0; n && i < 2; n = list_next(list, n), i++)
@@ -52,7 +52,7 @@ int main()
     list_remove(list, n);
 
   for (int i = 0; i < list->count; i++)
-    printf("%d ", *(int *) list_itr_head(list, i));
+    printf("%d ", *(int *) list_at(list, i));
 
   printf("\n");
   list_del(list);
