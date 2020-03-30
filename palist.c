@@ -5,7 +5,7 @@
 
 list_t *list_new(size_t el_size)
 {
-  list_t *list = malloc(sizeof *list);
+  list_t *list = calloc(1, sizeof *list);
 
   if (list == NULL)
     return NULL;
@@ -16,7 +16,6 @@ list_t *list_new(size_t el_size)
     return NULL;
   }
 
-  list->count = 0;
   list->el_size = el_size * sizeof(char);
   list->alloc_count = ALLOC_INC_COUNT;
   return list;
