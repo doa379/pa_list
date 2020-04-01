@@ -122,9 +122,9 @@ void *list_prev(list_t *list, void *data)
 
 void *list_at(list_t *list, ssize_t n)
 {
-  if (!list->count
-      || n > list->count - 1
-      || n < -list->count + 1)
+  size_t maximal = list->count - 1;
+
+  if (!list->count || n * n > maximal * maximal)
     return NULL;
 
   else if (n > 0)
@@ -133,7 +133,7 @@ void *list_at(list_t *list, ssize_t n)
   else if (n < 0)
     return (char *) list_tail(list) + (n + 1) * list->el_size;
     
-  return (char *) list_head(list);
+  return list_head(list);
 }
 
 void list_remove_tail(list_t *list)

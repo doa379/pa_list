@@ -24,7 +24,7 @@ int main()
     {
       printf("Realloc failed\n");
       list_del(list);
-      exit(0);
+      return 1;
     }
 
     printf("%d: List count %zu List Head %d List tail %d\n", v, list_count(list), *(int *) list_head(list), *(int *) list_tail(list));
@@ -36,7 +36,7 @@ int main()
     printf("%d ", *(int *) n);
 
   printf("\nIterate from head\n");
-  for (int i = 0; i < list->count; i++)
+  for (int i = 0 ; i < list->count; i++)
     printf("%d ", *(int *) list_at(list, i));
 
   printf("\nRemove from tail\n");
