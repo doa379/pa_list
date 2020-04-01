@@ -1,18 +1,19 @@
 /*
    $ cc test_patpool.c -L $PWD -l paqueue -Wl,-rpath,$PWD -o test_patpool && ./test_patpool
-   */
+*/
 
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
 #include "patpool.h"
 
-void func_cb(void *data)
+void func_cb(list_t *ARGS)
 {
-  int *v = (int *) data;
-  printf("Job %d\n", *v);
+  arg_t *arg0 = list_at(ARGS, 0);
+  int v = *(int *) arg0->arg;
+  printf("Job %d start\n", v);
   sleep(1);
-  printf("Job(s) complete, exit\n");
+  printf("Job %d complete\n", v);
 }
 
 int main()
@@ -23,7 +24,7 @@ int main()
   for (unsigned i = 0; i < 5; i++)
   {
     int v = rand() % 100;
-    tpool_queue(tpool, func_cb, &v, sizeof v);
+    tpool_queue(tpool, func_cb, 1, (arg_t) { &v, sizeof v });
     printf("Data %d job added\n", v);
   }
 
